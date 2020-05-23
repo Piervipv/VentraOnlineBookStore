@@ -1,0 +1,27 @@
+.navbar,
+.footer {
+    background-color: #0952c6;
+}
+
+.breadcrumb {
+    background-color: #e0ecff;
+}
+
+#orderingAndShipping,
+#contactUs,
+#made,
+.navbar-dark .navbar-nav .nav-link {
+    color: #daf2ff;
+}
+
+.card-fixed-width {
+    width: 18rem;
+}
+
+.card-full-height {
+    height: 100%;
+}
+
+img {
+    max-width: 100%;
+}

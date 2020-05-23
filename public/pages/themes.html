@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>VentraBooks | All Themes</title>
+    <link rel="icon" href="assets/img/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--our CSS-->
+    <link rel="stylesheet" type="text/css" href="assets/css/custom-styles.css">
+    <meta charset="utf-8">
+</head>
+
+<body>
+<div class="container-fluid fixed-top" >
+
+    <nav class="navbar nav-fill navbar-expand-lg navbar-dark rounded" >
+        <a class="navbar-brand" href="index.html"><b>VentraBooks </b></a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Homepage</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownBooks" role="button" href=""
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Books
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownBooks">
+                        <a class="dropdown-item" href="books.html">All books</a>
+                        <a class="dropdown-item" href="bestsellers.html">Bestsellers</a>
+                        <a class="dropdown-item" href="favorite.html">Our favorite readings</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="themes.html"><b>Themes</b></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="genres.html">Genres</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="authors.html">Authors</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownEvents" role="button" href=""
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Events
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownEvents">
+                        <a class="dropdown-item" href="all-events.html">All events</a>
+                        <a class="dropdown-item" href="events-this-month.html">Events this month</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownPrivate" role="button" href=""
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Private area
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownPrivate" id="privateArea">
+                        <!-- filled up dynamically -->
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+</div>
+
+<div class="row m-3">
+    <hr>
+</div>
+
+<nav aria-label="breadcrumb" class="container-fluid " >
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page">Home</li>
+        <li class="breadcrumb-item active" aria-current="page">Themes</li>
+    </ol>
+</nav>
+
+<div class="container-fluid" id="books-list">
+    <div class="row m-3">
+        <h4>Here you can find all the themes present in the Store.</h4>
+    </div>
+    <div class="row ml-3">
+        <p>They are listed in alphabetical order.</p>
+    </div>
+    <div class="col-sm">
+        <hr>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6" id="container">
+                <!--Tag to be filled dynamically with JS-->
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+    </div>
+    <!--Tag to be filled via JS with a list of books' thumbnail and info retrieved by the database-->
+</div>
+<div class="col-sm">
+    <hr>
+</div>
+<div class="container-fluid">
+    <footer class=" container-fluid footer text-center rounded" >
+        <hr>
+        <div class="row m-3">
+            <div class="col-sm-4">
+                <a id="orderingAndShipping" href="ordering-and-shipping.html">Ordering & Shipping</a>
+            </div>
+            <div class="col-sm-4">
+                <span id="made" >Made with &#x1F49A;across Chicago and Milan.</span>
+            </div>
+            <div class="col-sm-4">
+                <a id="contactUs" href="contact-us.html">Contact us</a>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<!--JQuery, Popper.js and Bootstrap JS-->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<!-- our JS -->
+<script src="../assets/js/Themes.js"></script>
+<script src="../assets/js/Logout.js"></script>
+</body>
+
+</html>

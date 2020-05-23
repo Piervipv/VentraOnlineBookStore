@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>VentraBooks</title>
+    <link rel="icon" href="assets/img/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--our CSS-->
+    <link rel="stylesheet" type="text/css" href="assets/css/custom-styles.css">
+    <meta charset="utf-8">
+</head>
+<body>
+<div class="container-fluid fixed-top" >
+
+    <nav class="navbar nav-fill navbar-expand-lg navbar-dark rounded" >
+        <a class="navbar-brand" href="index.html"><b>VentraBooks </b></a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.html"><b>Homepage</b></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownBooks" role="button" href=""
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Books
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownBooks">
+                        <a class="dropdown-item" href="books.html">All books</a>
+                        <a class="dropdown-item" href="bestsellers.html">Bestsellers</a>
+                        <a class="dropdown-item" href="favorite.html">Our favorite readings</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="themes.html">Themes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="genres.html">Genres</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="authors.html">Authors</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownEvents" role="button" href=""
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Events
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownEvents">
+                        <a class="dropdown-item" href="all-events.html">All events</a>
+                        <a class="dropdown-item" href="events-this-month.html">Events this month</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownPrivate" role="button" href=""
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Private area
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownPrivate" id="privateArea">
+                        <!-- filled up dynamically -->
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="row m-3">
+    <hr>
+</div>
+<nav aria-label="breadcrumb" class="container-fluid " >
+    <ol class="breadcrumb" >
+        <li class="breadcrumb-item active" aria-current="page">Home</li>
+    </ol>
+</nav>
+
+<div class="container-fluid">
+
+    <div class="row mt-2">
+        <div class="col-sm-12 text-center">
+            <h5 class="card-title">Welcome on Ventra Books!</h5>
+            <hr>
+            <p class="card-text">VentraBooks is the new online bookstore full of the latest and greatest books available.<br/>
+                Search for your next book and let us deliver it light-fast at your home.<br/>
+                Or, if you love our planet &#x1F30D;as us, choose the digital version of the book and start enjoy it immediately.
+            </p>
+        </div>
+    </div>
+    <hr>
+    <div class="row mt-4">
+        <div class="col-sm-6 text-center">
+            <img class="card-img-top" src="./assets/img/libreria-lello.jpg" alt="homepage-intro-image">
+
+
+
+        </div>
+        <div class="col-sm-6 text-center">
+            <div class="card m-2">
+                <div class="card-body">
+                    <h4 class="card-title">Not registered yet?</h4>
+                    <h6 class="card-subtitle mb-2">Create an account to be able to reserve and purchase stunning titles on Ventra Books.</h6>
+                    <a href="register.html" class="btn btn-primary">Register now</a>
+                </div>
+            </div>
+            <div class="card m-2">
+                <div class="card-body">
+                    <h4 class="card-title">Already with an account?</h4>
+                    <h6 class="card-subtitle mb-2">Login and enjoy a more custom experience.</h6>
+                    <a href="login.html" class="btn btn-primary">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Our bestsellers.</h5>
+                    <p class="card-text">Take a look at the most sold books in our store. Always up-to-date.
+                    </p>
+                    <a href="bestsellers.html" class="card-link">See books</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Our favorite readings.</h5>
+                    <p class="card-text">Check out a selection of our favorite books. <br/> We update it each month!
+                    </p>
+                    <a href="favorite.html" class="card-link">See books</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Events this month.</h5>
+                    <p class="card-text">All the events scheduled for this month. Search for a book or an author.</p>
+                    <a href="events-this-month.html" class="card-link">See events</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-sm">
+    <hr>
+</div>
+<div class="container-fluid">
+    <footer class=" container-fluid footer text-center rounded" >
+        <hr>
+        <div class="row m-3">
+            <div class="col-sm-4">
+                <a  href="ordering-and-shipping.html" id="orderingAndShipping">Ordering & Shipping</a>
+            </div>
+            <div class="col-sm-4">
+                <span  id="made">Made with &#x1F49A;across Chicago and Milan.</span>
+            </div>
+            <div class="col-sm-4">
+                <a  href="contact-us.html" id="contactUs">Contact us</a>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<!--JQuery, Popper.js and Bootstrap JS-->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<!--our JS-->
+<script src="./assets/js/Logout.js"></script>
+<script src="./assets/js/Dynamic.js"></script>
+</body>
+</html>
