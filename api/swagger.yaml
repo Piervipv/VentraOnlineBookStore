@@ -1,0 +1,1024 @@
+openapi: 3.0.1
+info:
+  title: Simple Bookstore
+  description: >-
+    This is the bookstore server  for the Hypermedia project course 2019. It
+    contains a book inventory, users and
+     a shopping cart.
+  contact:
+    email: piervincenzov@gmail.com
+  license:
+    name: Apache-2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: "1.0.0-oas3"
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
+servers:
+  - url: 'https://ventra-books.herokuapp.com/'
+tags:
+  - name: book
+    description: a book sold by the BookStore
+  - name: user
+    description: Operations about user
+  - name: author
+    description: Author of a set of books
+  - name: event
+    description: Event in which a book is promoted by the Author
+  - name: theme
+    description: 'A theme discussed in a book (love, politic, history, ...)'
+  - name: genre
+    description: 'A genre to which a book can belong (novel, sage, biography, ...)'
+paths:
+  /books:
+    get:
+      tags:
+        - book
+      summary: Books belonging to the inventory
+      description: List of books belonging to the inventory
+      operationId: booksGET
+      parameters:
+        - name: isBestseller
+          in: query
+          description: Specify if the book is a Bestseller
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: boolean
+        - name: isFavourite
+          in: query
+          description: Specify if the book is a favourite reading of the BookStore
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: boolean
+        - name: offset
+          in: query
+          description: Pagination offset. Default is 0.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: |-
+            Maximum number of items per page. Default is 20 and cannot exceed
+             500.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A collection of Books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookPreview'
+                x-content-type: application/json
+        '204':
+          description: No content.
+        '404':
+          description: Bad request, triggered when the params are set in an invalid way.
+      x-swagger-router-controller: Book
+  '/books/{bookId}':
+    get:
+      tags:
+        - book
+      summary: Find book by ID
+      description: Returns a book
+      operationId: getBookById
+      parameters:
+        - name: bookId
+          in: path
+          description: ID of book to return
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '404':
+          description: Book not found
+      x-swagger-router-controller: Book
+  '/books/{bookId}/addToCart':
+    post:
+      tags:
+        - book
+      summary: reservation
+      description: reserve/b
+      operationId: addToCartPOST
+      parameters:
+        - name: bookId
+          in: path
+          description: ID of book to add to the cart
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Book added to cart.
+        '401':
+          description: Unauthenticated user.
+        '500':
+          description: Internal server error.
+      security:
+        - cookieAuth: []
+      x-swagger-router-controller: Book
+  '/books/{bookId}/removeFromCart':
+    post:
+      tags:
+        - book
+      summary: reservation
+      description: remove/b
+      operationId: removeFromCartPOST
+      parameters:
+        - name: bookId
+          in: path
+          description: ID of book to remove from the cart
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Book successfully removed.
+        '401':
+          description: Unauthenticated user.
+        '500':
+          description: Internal server error.
+      security:
+        - cookieAuth: []
+      x-swagger-router-controller: Book
+  '/books/{bookId}/reviews':
+    get:
+      tags:
+        - book
+      summary: retrieve the Reviews of the book
+      description: returns a list of Reviews
+      operationId: getReviews
+      parameters:
+        - name: bookId
+          in: path
+          description: ID of book
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A collection of Reviews of the given Book
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                    example: 'Origin'
+                    description: Title of the current book.
+                  reviews:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Review'
+                x-content-type: application/json
+        '204':
+          description: No content.
+      x-swagger-router-controller: Book
+  /authors:
+    get:
+      tags:
+        - author
+      summary: all authors in the store
+      description: 'List authors in the store '
+      operationId: authorGET
+      parameters:
+        - name: offset
+          in: query
+          description: Pagination offset. Default is 0.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: |-
+            Maximum number of items per page. Default is 20 and cannot exceed
+             500.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A collection of Authors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuthorPreview'
+                x-content-type: application/json
+        '204':
+          description: No content.
+      x-swagger-router-controller: Author
+    x-swagger-router-controller: Author
+  '/authors/{authorId}':
+    get:
+      tags:
+        - author
+      summary: Find author by Id
+      description: Returns an Author
+      operationId: getAuthorById
+      parameters:
+        - name: authorId
+          in: path
+          description: Id of the author to return
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author'
+        '404':
+          description: Author not found
+      x-swagger-router-controller: Author
+  /events:
+    get:
+      tags:
+        - event
+      summary: all scheduled events
+      description: 'List of events scheduled '
+      operationId: eventGET
+      parameters:
+        - name: offset
+          in: query
+          description: Pagination offset. Default is 0.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: |-
+            Maximum number of items per page. Default is 20 and cannot exceed
+             500.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A collection of Events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventPreview'
+                x-content-type: application/json
+        '204':
+          description: No content.
+      x-swagger-router-controller: Event
+    x-swagger-router-controller: Event
+  /eventsThisMonth:
+    get:
+      tags:
+        - event
+      summary: all events scheduled for the current month
+      description: 'List of events scheduled for the current month'
+      operationId: eventThisMonthGET
+      parameters:
+        - name: offset
+          in: query
+          description: Pagination offset. Default is 0.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: |-
+            Maximum number of items per page. Default is 20 and cannot exceed
+             500.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A collection of Events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventPreview'
+                x-content-type: application/json
+        '204':
+          description: No content.
+      x-swagger-router-controller: Event
+    x-swagger-router-controller: Event
+  '/events/{eventId}':
+    get:
+      tags:
+        - event
+      summary: Find event by Id
+      description: Returns an Event
+      operationId: getEventById
+      parameters:
+        - name: eventId
+          in: path
+          description: Id of the event to return
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '404':
+          description: Event not found
+        '500':
+          description: Internal Server Error
+      x-swagger-router-controller: Event
+  /genres:
+    get:
+      tags:
+        - genre
+      summary: all group of genres
+      description: 'List of genres '
+      operationId: genreGET
+      parameters:
+        - name: offset
+          in: query
+          description: Pagination offset. Default is 0.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: |-
+            Maximum number of items per page. Default is 20 and cannot exceed
+             500.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A collection of litterary Genres
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Genre'
+                x-content-type: application/json
+        '204':
+          description: No content.
+      x-swagger-router-controller: Genre
+  '/genres/{genreTitle}':
+    get:
+      tags:
+        - genre
+      summary: retrieve all books of the given genre
+      description: retrieve all books of the given genre
+      operationId: getBooksByGenre
+      parameters:
+        - name: genreTitle
+          in: path
+          description: title of the genre
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A collection of Book Previews of the given Genre
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookPreview'
+                x-content-type: application/json
+        '204':
+          description: No content.
+      x-swagger-router-controller: Genre
+  /themes:
+    get:
+      tags:
+        - theme
+      summary: all groups of themes
+      description: 'List of themes '
+      operationId: themeGET
+      parameters:
+        - name: offset
+          in: query
+          description: Pagination offset. Default is 0.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: |-
+            Maximum number of items per page. Default is 20 and cannot exceed
+             500.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A collection of Themes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Theme'
+                x-content-type: application/json
+        '204':
+          description: No content.
+      x-swagger-router-controller: Theme
+  '/themes/{themeTitle}':
+    get:
+      tags:
+        - theme
+      summary: retrieve all books of the given theme
+      description: retrieve all books of the given theme
+      operationId: getBooksByTheme
+      parameters:
+        - name: themeTitle
+          in: path
+          description: title of the theme
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A collection of Book Previews of the given Theme
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookPreview'
+                x-content-type: application/json
+        '204':
+          description: No content.
+      x-swagger-router-controller: Theme
+  /user/login:
+    post:
+      tags:
+        - user
+      summary: Login
+      description: Login with a form
+      operationId: userLoginPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginBody'
+        required: true
+      responses:
+        '200':
+          description: succesfull login
+        '400':
+          description: Wrong password or email, or duplicated session id on the server.
+        '500':
+          description: Internal server error.
+      x-swagger-router-controller: User
+  /user/logout:
+    post:
+      tags:
+        - user
+      summary: Logout
+      description: Logout request
+      operationId: userLogoutPOST
+      responses:
+        '200':
+          description: succesful logout
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error.
+      x-swagger-router-controller: User
+  /user/register:
+    post:
+      tags:
+        - user
+      summary: Create a new user.
+      description: Register into the store.
+      operationId: userRegisterPOST
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterBody'
+      responses:
+        '200':
+          description: succesfull login
+        '400':
+          description: Email already in use, or empty fields.
+        '500':
+          description: Internal server error.
+      x-swagger-router-controller: User
+  '/user/{userId}/userPurchases':
+    get:
+      tags:
+        - user
+      summary: retrieve all the purchases of the given user
+      description: returns a list of Purchases
+      operationId: getUserPurchases
+      parameters:
+        - name: userId
+          in: path
+          description: Id of the User
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: A collection of Purchases
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Purchase'
+                x-content-type: application/json
+      security:
+        - cookieAuth: []
+      x-swagger-router-controller: User
+  /user/cart:
+    get:
+      tags:
+        - user
+      summary: retrieve the books contained in the given Cart
+      description: returns a list of Cart Items
+      operationId: getCart
+      responses:
+        '200':
+          description: A collection of Books contained in the Cart
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CartItem'
+                x-content-type: application/json
+        '401':
+          description: Unauthenticated user.
+      security:
+        - cookieAuth: []
+      x-swagger-router-controller: User
+components:
+  schemas:
+    AuthorPreview:
+      title: AuthorPreview
+      required:
+        - id
+        - firstname
+        - lastname
+        - picture
+      type: object
+      properties:
+        id:
+          type: integer
+        firstname:
+          type: string
+        lastname:
+          type: string
+        picture:
+          type: string
+      description: >-
+        This is a preview of Author, the writer of some book. As a preview it
+        contains only the essential info about the Author.
+      example:
+        id: 1
+        firsname: Mark
+        lastname: Twain
+        picture: /assets/img/author-1
+    Purchase:
+      title: Purchase
+      required:
+        - user_id
+        - date_time
+        - book
+        - amount
+      type: object
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        date_time:
+          type: string
+        book:
+          $ref: '#/components/schemas/BookPreview'
+        amount:
+          type: string
+      description: A purchase that the user performed
+      example:
+        id: 0
+        user_id: 1
+        date_time: 12.03.18
+        book:
+          isbn: 9788817153096
+          price: eur 6.80
+          title: The Adventures of Huckleberry Finn
+          format: paper
+          picture: /assets/img/9788817153096
+        amount: eur 6.80
+    BookPreview:
+      title: BookPreview
+      required:
+        - isbn
+        - price
+        - title
+        - format
+        - picture
+      type: object
+      properties:
+        isbn:
+          type: string
+        price:
+          type: string
+        title:
+          type: string
+        format:
+          type: string
+        picture:
+          type: string
+      description: 'A preview of a Book, containing only the essential info'
+      example:
+        isbn: 9788817153096
+        price: eur 6.80
+        title: The Adventures of Huckleberry Finn
+        format: paper
+        picture: /assets/img/9788817153096
+    Review:
+      title: Review
+      required:
+        - text
+        - user_firstname
+        - user_lastname
+        - stars
+
+      type: object
+      properties:
+        text:
+          type: string
+        user_firstname:
+          type: string
+        user_lastname:
+          type: string
+        stars:
+          type: integer
+      description: A review of a Book performed by an User
+      example:
+        text: What do we say to the God of the Death? Not today.
+        user_firstname: Piervincenzo
+        user_lastname: Ventrella
+        stars: 3
+    Book:
+      title: Book
+      required:
+        - isbn
+        - title
+        - abstract
+        - picture
+        - price
+        - format
+        - copies_available
+        - isBestseller
+        - isFavorite
+
+      type: object
+      properties:
+        isbn:
+          type: string
+        title:
+          type: string
+        abstract:
+          type: string
+        fact_sheet:
+          type: string
+        interview:
+          type: string
+        picture:
+          type: string
+        price:
+          type: string
+        format:
+          type: string
+        copies_available:
+          type: integer
+        isBestseller:
+          type: boolean
+        isFavourite:
+          type: boolean
+        similarBooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookPreview'
+        authors:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorPreview'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventPreview'
+        hasReviews:
+          type: boolean
+        discussedThemes:
+          type: array
+          items:
+            type: string
+        genres:
+          type: array
+          items:
+            type: string
+      description: A book for sale in the store
+      example:
+        isbn: "9788817153096"
+        title: The Adventures of Huckleberry Finn
+        abstract: Mark Twain’s The Adventures of Huckleberry Finn is one of the greatest novels in American literature. This paper attempts to outline the images of natural environment and the gap between the black and white people during the civil war. The essential part in this paper likens the way of living inside and outside the city and how Huck gets away from the hypocrisy of society and of the religious people. It illustrates Huck’s adventures in the wild field.
+        factsheet: Adventures of Huckleberry Finn (or, in more recent editions, The Adventures of Huckleberry Finn) is a novel by Mark Twain, first published in the United Kingdom in December 1884 and in the United States in February 1885. Commonly named among the Great American Novels, the work is among the first in major American literature to be written throughout in vernacular English, characterized by local color regionalism. It is told in the first person by Huckleberry "Huck" Finn, the narrator of two other Twain novels (Tom Sawyer Abroad and Tom Sawyer, Detective) and a friend of Tom Sawyer. It is a direct sequel to The Adventures of Tom Sawyer.
+        picture: /assets/img/9788817153096
+        price: eur 6.80
+        format: paper
+        copies_available: 50
+        isBestseller: true
+        isFavorite: false
+        hasReview: false
+        similarBooks:
+          [
+          {
+            isbn: 9788817153096,
+            price: eur 3.80,
+            title: Life on the Mississippi,
+            format: digital,
+            picture: /assets/img/9788817153096
+          },
+          {
+            isbn: 9788636505700,
+            price: eur 20.90,
+            title: The ultimate hitchhiker's guide,
+            format: digital,
+            picture: /assets/img/9788636505700
+          },
+          ]
+        authors:
+          [
+          {
+            id: 1,
+            firsname: Mark,
+            lastname: Twain,
+            picture: /assets/img/author-1
+          }
+          ]
+    Author:
+      title: Author
+      required:
+        - firstname
+        - lastname
+        - events
+        - bio
+      type: object
+      properties:
+        id:
+          type: integer
+        firstname:
+          type: string
+        lastname:
+          type: string
+        picture:
+          type: string
+        bio:
+          type: string
+        writtenBooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookPreview'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventPreview'
+      description: A writer of some books
+      example:
+        id: 1
+        firsname: Mark
+        lastname: Twain
+        picture: /assets/img/author-1
+        bio: Samuel Langhorne Clemens (November 30, 1835 – April 21, 1910), known by his pen name Mark Twain, was an American writer, humorist, entrepreneur, publisher, and lecturer. His novels include The Adventures of Tom Sawyer (1876) and its sequel, the Adventures of Huckleberry Finn (1885),the latter often called "The Great American Novel".Twain was raised in Hannibal, Missouri, which later provided the setting for Tom Sawyer and Huckleberry Finn. He served an apprenticeship with a printer and then worked as a typesetter, contributing articles to the newspaper of his older brother Orion Clemens. He later became a riverboat pilot on the Mississippi River before heading west to join Orion in Nevada. He referred humorously to his lack of success at mining, turning to journalism for the Virginia City Territorial Enterprise. His humorous story, "The Celebrated Jumping Frog of Calaveras County", was published in 1865, based on a story that he heard at Angels Hotel in Angels Camp, California, where he had spent some time as a miner. The short story brought international attention and was even translated into French.[4] His wit and satire, in prose and in speech, earned praise from critics and peers, and he was a friend to presidents, artists, industrialists, and European royalty.Twain earned a great deal of money from his writings and lectures, but ....
+        writtenBooks:
+          [
+          {
+            isbn: 9788817153096,
+            price: eur 3.80,
+            title: Life on the Mississippi,
+            format: digital,
+            picture: /assets/img/9788817153096
+          },
+          {
+            isbn: 9788817153096,
+            price: eur 6.80,
+            title: The Adventures of Huckleberry Finn,
+            format: paper,
+            picture: /assets/img/9788817153096
+          }
+          ]
+        events:
+          []
+    EventPreview:
+      title: EventPreview
+      required:
+        - title
+        - date
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        date:
+          type: string
+      description: 'A preview of Event, containing only the essential info about an Event'
+      example:
+        id: 1
+        title: Dan Brown in Feltrinelli for his BestSeller "The Da Vinci Code"
+        date: 17/07/2019
+    Event:
+      title: Event
+      required:
+        - title
+        - location
+        - date
+        - time
+        - book
+        - authors
+
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        location:
+          type: string
+        date:
+          type: string
+        time:
+          type: string
+        book:
+          $ref: '#/components/schemas/BookPreview'
+        authors:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorPreview'
+        picture:
+          type: string
+      example:
+        id: 1
+        title: Dan Brown in Feltrinelli for his BestSeller "The Da Vinci Code"
+          description:Dan Brown, on Wednesday July 17th, will be in the famous Feltrinelli BookStore in Corso Buenos Aires for his BestSeller "The Da Vinci Code". Food and drink will be offered during the event.
+        date: 17/07/2019
+        time: from 5:30 p.m. to 8:00 p.m.
+        book:
+          isbn: 9785040861118,
+          price: eur 17.90,
+          title: The Da Vinci Code,
+          format: paper,
+          picture: /assets/img/9785040861118
+        authors:
+          [
+          {
+            id: 2,
+            firsname: Dan,
+            lastname: ,
+            picture: /assets/img/author-2
+          }
+          ]
+    Theme:
+      title: Theme
+      required:
+        - name
+        - description
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+      description: A theme discussed in a book
+      example:
+        name: Travelling
+        overview: “Travel is  fatal to prejudice, bigotry, and narrow mindedness., and many of our people need it sorely on these accounts.” ~ Mark Twain
+    Genre:
+      title: Genre
+      required:
+        - name
+        - description
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+      description: A genre to which a book belongs
+      example:
+        name: Novel
+        description: A novel is a relatively long work of narrative fiction, normally written in prose form, and which is typically published as a book. The entire genre has been seen as having "a continuous and comprehensive history of about two thousand years", with its origins in classical Greece and Rome, in medieval and early modern romance, and in the tradition of the Italian renaissance novella. (Since the 18th century, the term "novella", or "novelle" in German, has been used in English and other European languages to describe a long short story or a short novel.)
+    CartItem:
+      title: CartItem
+      type: object
+      properties:
+        book:
+          $ref: '#/components/schemas/BookPreview'
+        quantity:
+          type: integer
+    LoginBody:
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    RegisterBody:
+      required:
+        - email
+        - firstname
+        - lastname
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      name: JSESSIONID
+      in: cookie
